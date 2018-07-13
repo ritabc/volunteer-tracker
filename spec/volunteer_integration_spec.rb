@@ -15,6 +15,7 @@ describe 'the project creation path', {:type => :feature} do
     visit '/'
     fill_in('title', :with => 'Teaching Kids to Code')
     click_button('Create Project')
+    binding.pry
     expect(page).to have_content('Teaching Kids to Code')
   end
 end

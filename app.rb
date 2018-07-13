@@ -22,17 +22,21 @@ post('/') do
 end
 
 get('/project/:id') do
-  @project = Project.find(:id)
+  project_id = params.fetch('id').to_i
+  @project = Project.find(project_id)
   erb(:project)
 end
 
 get('/update-project/:id') do
-  @project = Project.find(:id)
+  project_id = params.fetch('id').to_i
+  @project = Project.find(project_id)
   erb(:update_project)
 end
 
 patch('/project/:id') do
+  project_id = params.fetch('id').to_i
   title = params.fetch('title')
-  @project = Project.find(:id)
+  @project = Project.find(project_id)
   @project.update({:title => title})
+  erb(:project)
 end
