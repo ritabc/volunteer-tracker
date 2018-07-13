@@ -14,4 +14,15 @@ class Project
     result = DB.exec("INSERT INTO projects (title) VALUES ('#{@title}') RETURNING id;")
     @id = result.first.fetch('id').to_i
   end
+
+  def self.all
+    projects_in_db = DB.exec("SELECT * FROM projects;")
+    projects = []
+    projects_in_db.each do |project|
+      title = project.fetch('title')
+      id = project.fetch('id').to_i
+      projects.push(Project.new({:title => title, :id => id}))
+    end
+    projects
+  end
 end
