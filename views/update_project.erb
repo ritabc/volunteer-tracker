@@ -1,0 +1,10 @@
+<form action="/project/<%= project.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div class="form-group">
+    <h3>Update a Project Name</h3>
+    <label for="title"></label>
+    <input type="text" id="title" name="title">
+
+    <button type="submit">Update Project</button>
+  </div>
+</form>

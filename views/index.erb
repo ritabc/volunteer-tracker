@@ -1,18 +1,18 @@
 <h1>Welcome to the Non-Profit</h1>
 
-<h2>Create a New Project</h2>
+<h3>Create a New Project</h3>
 
 <form action="/" method="post">
   <div class="form-group">
     <label for="title"></label>
-    <input type="text" name="title">
+    <input type="text" id="title" name="title">
 
-    <button class="btn btn-primary" type="submit">Create Project</button>
+    <button class="btn btn-primary" type="button">Create Project</button>
   </div>
 </form>
 
 <% if @projects.any? %>
-  <h2>Here are the created projects:</h2>
+  <h3>Here are the created projects:</h3>
 
   <ul>
     <% @projects.each do |project| %>
@@ -24,5 +24,5 @@
     <% end %>
   </ul>
 <% else %>
-  <h2>You have not yet created any projects!</h2>
+  <h3>You have not yet created any projects!</h3>
 <% end %>
