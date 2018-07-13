@@ -1,7 +1,16 @@
 require('capybara/rspec')
 require('./app')
 require('sinatra')
-require('spec_helper')
+# require('spec_helper')
+
+DB = PG.connect({:dbname => "volunteer_tracker_test"})
+
+RSpec.configure do |config|
+  config.after(:each) do
+    DB.exec("DELETE FROM volunteers *;")
+    DB.exec("DELETE FROM projects *;")
+  end
+end
 
 Capybara.app = Sinatra::Application
 set(:show_exceptions, false)
@@ -15,7 +24,6 @@ describe 'the project creation path', {:type => :feature} do
     visit '/'
     fill_in('title', :with => 'Teaching Kids to Code')
     click_button('Create Project')
-    binding.pry
     expect(page).to have_content('Teaching Kids to Code')
   end
 end
@@ -36,18 +44,18 @@ describe 'the project update path', {:type => :feature} do
 end
 
 # # A user should be able to nagivate to a project's detail page and delete the project. The user will then be directed to the index page. The project should no longer be on the list of projects.
-#
-# describe 'the project delete path', {:type => :feature} do
-#   it 'allows a user to delete a project' do
-#     test_project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
-#     test_project.save
-#     id = test_project.id
-#     visit "/projects/#{id}/edit"
-#     click_button('Delete Project')
-#     vist '/'
-#     expect(page).not_to have_content("Teaching Kids to Code")
-#   end
-# end
+
+describe 'the project delete path', {:type => :feature} do
+  it 'allows a user to delete a project' do
+    test_project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+    test_project.save
+    id = test_project.id
+    visit "/projects/#{id}/edit"
+    click_button('Delete Project')
+    visit '/'
+    expect(page).not_to have_content("Teaching Kids to Code")
+  end
+end
 #
 # # The user should be able to click on a project detail page and see a list of all volunteers working on that project. The user should be able to click on a volunteer to see the volunteer's detail page.
 #

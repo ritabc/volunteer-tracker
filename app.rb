@@ -27,10 +27,10 @@ get('/project/:id') do
   erb(:project)
 end
 
-get('/update-project/:id') do
+get('/projects/:id/edit') do
   project_id = params.fetch('id').to_i
   @project = Project.find(project_id)
-  erb(:update_project)
+  erb(:edit_project)
 end
 
 patch('/project/:id') do
@@ -39,4 +39,12 @@ patch('/project/:id') do
   @project = Project.find(project_id)
   @project.update({:title => title})
   erb(:project)
+end
+
+delete('/project-deleted') do
+  project_id = params.fetch('project_id').to_i
+  project = Project.find(project_id)
+  project.delete
+  @projects = Project.all
+  erb(:index)
 end
