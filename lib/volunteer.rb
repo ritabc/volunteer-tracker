@@ -21,10 +21,20 @@ class Volunteer
     volunteers = []
     volunteers_in_db.each do |volunteer|
       name = volunteer.fetch('name')
-      id = volunteer.fetch('id')
+      id = volunteer.fetch('id').to_i
       project_id = volunteer.fetch('project_id')
       volunteers.push(Volunteer.new({:name => name, :id => id, :project_id => project_id}))
     end
     volunteers
+  end
+
+  def self.find(id)
+    found_volunteer = nil
+    Volunteer.all.each do |volunteer|
+      if volunteer.id == id
+        found_volunteer = volunteer
+      end
+    end
+    found_volunteer
   end
 end
