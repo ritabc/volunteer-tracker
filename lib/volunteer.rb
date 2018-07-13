@@ -11,4 +11,9 @@ class Volunteer
     self.name.==(another_volunteer.name)
   end
 
+  def save
+    result = DB.exect("INSERT INTO volunteers (name, project_id) VALUES ('#{@name}', #{@project_id}) RETURNING id;")
+    @id = result.first.fetch('id').to_i
+  end
+
 end
