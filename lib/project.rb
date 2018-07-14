@@ -49,14 +49,13 @@ class Project
   end
 
   def update(attributes)
-    @id = self.id
     @title = attributes.fetch(:title, @title)
     if @title.length > 0
-      DB.exec("UPDATE projects SET title = '#{@title}' WHERE id = #{@id};")
+      DB.exec("UPDATE projects SET title = '#{@title}' WHERE id = #{self.id};")
     end
   end
 
   def delete
-    DB.exec("DELETE FROM projects WHERE id = #{self.id};") 
+    DB.exec("DELETE FROM projects WHERE id = #{self.id};")
   end
 end
